@@ -21,10 +21,15 @@
 
 (function(doc) {
   class WebPass {
-    login(password) {
+    login(login) {
+      if (login.username) {
+        let fields = doc.querySelectorAll("input[type=email], input[type=text], input:first-of-type");
+        if (fields.length > 0)
+          fields[0].value = login.username;
+      }
       let fields = doc.querySelectorAll("input[type='password']");
       for (let field of fields)
-        field.value = password;
+        field.value = login.password;
     }
   }
 

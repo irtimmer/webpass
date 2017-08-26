@@ -41,7 +41,8 @@ def show(data):
   result = subprocess.Popen(['gpg', '--quiet', '-d', PASS_DIR + os.sep + data['name'] + '.gpg'], stdout=subprocess.PIPE)
   out, _ = result.communicate()
   lines = [line.decode('utf-8') for line in out.splitlines()]
-  send_message({ 'password': lines[0], 'meta': lines[1:] })
+  metas = dict([(x.strip() for x in line.split(":", 1)) for line in lines[1:]])
+  send_message({ 'password': lines[0], 'meta': metas })
 
 def main():
   while True:

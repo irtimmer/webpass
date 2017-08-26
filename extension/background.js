@@ -30,7 +30,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       name: request.name
     }, (response) => {
       browser.tabs.executeScript({ file: '/inject.js', allFrames: true }, function() {
-        browser.tabs.executeScript({code: 'document.webpass.login(' + JSON.stringify(response.password) + ');'});
+        let login = {
+          username: response.meta.login,
+          password: response.password
+        };
+        browser.tabs.executeScript({code: 'document.webpass.login(' + JSON.stringify(login) + ');'});
       });
     });
   }
