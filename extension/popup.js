@@ -60,14 +60,7 @@ class PassSearch {
   }
 
   onClick(event) {
-    browser.runtime.sendNativeMessage("webpass", {
-      cmd: "show",
-      name: event.target.textContent
-    }, (response) => {
-      chrome.tabs.executeScript({ file: '/inject.js', allFrames: true }, function() {
-        chrome.tabs.executeScript({code: 'document.webpass.login(' + JSON.stringify(response.password) + ');'});
-      });
-    });
+    browser.runtime.sendMessage({ "action": "login", "name": event.target.textContent });
   }
 }
 
