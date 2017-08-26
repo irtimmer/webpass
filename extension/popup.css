@@ -1,0 +1,42 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 280px;
+}
+
+#search {
+  width: 100%;
+  padding: 5px;
+  border: 0;
+}
+
+#search:focus {
+  outline: 0;
+}
+
+#results {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#results:empty {
+  display: none;
+}
+
+#results button {
+  width: 100%;
+  background-color: #fff;
+  border: 0;
+  box-shadow: none;
+  text-align: left;
+  padding: 10px 5px;
+}
+
+#results button:hover, #results button:focus {
+  outline: 0;
+  background-color: #eee;
+}

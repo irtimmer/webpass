@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+#
+# This file is part of WebPass.
+# Copyright (C) 2017 Iwan Timmer
+#
+# WebPass is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# WebPass is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+
+from glob import glob
+import os, sys, struct, json, subprocess
+
+PASS_DIR = os.path.expanduser('~/.password-store')
+
+# Send message using Native messaging protocol
+def send_message(data):
+  msg = json.dumps(data).encode('utf-8')
+  length = struct.pack('@I', len(msg))
+  sys.stdout.buffer.write(length)
+  sys.stdout.buffer.write(msg)
+  sys.stdout.buffer.flush()
+
+def search(data):
+  query = '**' + os.sep + data['query'] + '*'
+  files_raw = glob(PASS_DIR + os.sep + query + '.gpg')
+  files = [file[len(PASS_DIR + os.sep):-4] for file in files_raw]
+  send_message({ 'results': files })
+
+def show(data):
+  result = subprocess.Popen(['gpg', '--quiet', '-d', PASS_DIR + os.sep + data['name'] + '.gpg'], stdout=subprocess.PIPE)
+  out, _ = result.communicate()
+  lines = [line.decode('utf-8') for line in out.splitlines()]
+  send_message({ 'password': lines[0], 'meta': lines[1:] })
+
+def main():
+  while True:
+    # Read message using Native messaging protocol
+    length_bytes = sys.stdin.buffer.read(4)
+    if len(length_bytes) == 0:
+      return
+
+    length = struct.unpack('i', length_bytes)[0]
+    data = json.loads(sys.stdin.buffer.read(length).decode('utf-8'))
+
+    if data['cmd'] == 'find':
+      search(data)
+    elif data['cmd'] == 'show':
+      show(data)
+
+if __name__ == '__main__':
+  main()
