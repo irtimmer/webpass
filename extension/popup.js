@@ -29,10 +29,12 @@ class PassSearch {
     this.results = results;
 
     this.input.addEventListener("input", this.onInput.bind(this));
+    browser.tabs.query({ currentWindow: true, active: true }, this.onTabs.bind(this));
   }
 
-  onInput(event) {
-    if (this.input.value.length == 0) {
+  search(query) {
+    console.log(query);
+    if (!query) {
       while (this.results.firstChild)
         this.results.removeChild(this.results.firstChild);
       
@@ -41,7 +43,7 @@ class PassSearch {
 
     browser.runtime.sendNativeMessage("webpass", {
       cmd: "find",
-      query: this.input.value
+      query: query
     }, (response) => {
       while (this.results.firstChild)
         this.results.removeChild(this.results.firstChild);
@@ -57,6 +59,15 @@ class PassSearch {
         this.results.appendChild(item);
       }
     });
+  }
+
+  onTabs(tabs) {
+    if (tabs[0] && tabs[0].url)
+      this.search(new URL(tabs[0].url).hostname);
+  }
+
+  onInput(event) {
+    this.search(this.input.value.length > 0 ? this.input.value : null);
   }
 
   onClick(event) {
