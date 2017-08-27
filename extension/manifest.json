@@ -3,7 +3,7 @@
   "manifest_version": 2,
 
   "name": "WebPass",
-  "description": "Web Extensions for zx2c4's pass",
+  "description": "Web extension for zx2c4's pass",
   "version": "0.1",
   "applications": {
     "gecko": {
