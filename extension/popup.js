@@ -27,8 +27,11 @@ class PassSearch {
   constructor(input, results) {
     this.input = input;
     this.results = results;
+    this.selectionIndex = -1;
 
     this.input.addEventListener("input", this.onInput.bind(this));
+    this.input.addEventListener("keydown", this.onKeyDown.bind(this));
+    this.input.addEventListener("blur", this.onBlur.bind(this));
     browser.tabs.query({ currentWindow: true, active: true }, this.onTabs.bind(this));
   }
 
@@ -72,6 +75,30 @@ class PassSearch {
 
   onClick(event) {
     browser.runtime.sendMessage({ "action": "login", "name": event.target.textContent });
+  }
+
+  onBlur(event) {
+    if (this.results.children[this.selectionIndex])
+      this.results.children[this.selectionIndex].className = null;
+
+    this.selectionIndex = -1;
+  }
+
+  onKeyDown(event) {
+    if (event.keyCode == 0x0d && this.results.children[this.selectionIndex])
+      browser.runtime.sendMessage({ "action": "login", "name": this.results.children[this.selectionIndex].textContent });
+    else if (event.keyCode == 0x26 && this.selectionIndex > 0)
+      this.selectionIndex--;
+    else if (event.keyCode == 0x28 && this.selectionIndex < this.results.childElementCount - 1)
+      this.selectionIndex++;
+    else
+      return;
+
+    for (let e of this.results.getElementsByClassName('focus'))
+      e.className = null;
+
+    this.results.children[this.selectionIndex].className = "focus";
+    event.preventDefault();
   }
 }
 

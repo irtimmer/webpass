@@ -36,7 +36,7 @@ body {
   padding: 10px 5px;
 }
 
-#results button:hover, #results button:focus {
+#results button:hover, #results button:focus, #results .focus button {
   outline: 0;
   background-color: #eee;
 }
