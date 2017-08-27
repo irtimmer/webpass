@@ -36,7 +36,6 @@ class PassSearch {
   }
 
   search(query) {
-    console.log(query);
     if (!query) {
       while (this.results.firstChild)
         this.results.removeChild(this.results.firstChild);
