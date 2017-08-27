@@ -4,6 +4,12 @@
   "name": "WebPass",
   "description": "Web Extensions for zx2c4's pass",
   "version": "0.1",
+  "applications": {
+    "gecko": {
+      "id": "webpass@itimmer.nl",
+      "strict_min_version": "50.0"
+    }
+  },
 
   "background": {
     "persistent": false,

@@ -1,0 +1,9 @@
+{
+  "name": "webpass",
+  "description": "Host for communicating with zx2c4's pass",
+  "path": "%PATH%",
+  "type": "stdio",
+  "allowed_extensions": [
+    "webpass@itimmer.nl"
+  ]
+}
