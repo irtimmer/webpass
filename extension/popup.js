@@ -75,6 +75,7 @@ class PassSearch {
 
   onClick(event) {
     browser.runtime.sendMessage({ "action": "login", "name": event.target.textContent });
+    window.close();
   }
 
   onBlur(event) {
@@ -85,9 +86,10 @@ class PassSearch {
   }
 
   onKeyDown(event) {
-    if (event.keyCode == 0x0d && this.results.children[this.selectionIndex])
+    if (event.keyCode == 0x0d && this.results.children[this.selectionIndex]) {
       browser.runtime.sendMessage({ "action": "login", "name": this.results.children[this.selectionIndex].textContent });
-    else if (event.keyCode == 0x26 && this.selectionIndex > 0)
+      window.close();
+    } else if (event.keyCode == 0x26 && this.selectionIndex > 0)
       this.selectionIndex--;
     else if (event.keyCode == 0x28 && this.selectionIndex < this.results.childElementCount - 1)
       this.selectionIndex++;
