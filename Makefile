@@ -9,4 +9,4 @@ webpass.crx: $(EXT_FILES)
 
 webpass.xpi: $(EXT_FILES)
 	rm -f webpass.xpi
-	zip -r webpass.xpi $(EXT_FILES)
+	zip -r -j webpass.xpi $(EXT_FILES)
