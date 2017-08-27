@@ -1,7 +1,0 @@
-{
-  "name": "webpass",
-  "description": "Host for communicating with zx2c4's pass",
-  "path": "/home/iwan/Development/webpass/host/webpass",
-  "type": "stdio",
-  "allowed_origins": []
-}
