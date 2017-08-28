@@ -51,12 +51,19 @@ class PassSearch {
         this.results.removeChild(this.results.firstChild);
 
       for (let result of response.results) {
+        let domain = result.split('/').reverse()[0];
+
         let item = document.createElement("li");
         let button = document.createElement("button");
+        let favicon = document.createElement("img");
+        let label = document.createElement("span");
 
-        button.textContent = result;
+        favicon.setAttribute("src", "https://s2.googleusercontent.com/s2/favicons?domain=" + domain);
+        label.textContent = result;
         button.addEventListener("click", this.onClick.bind(this));
 
+        button.appendChild(favicon);
+        button.appendChild(label);
         item.appendChild(button);
         this.results.appendChild(item);
       }

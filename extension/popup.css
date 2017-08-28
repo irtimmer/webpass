@@ -41,3 +41,10 @@ body {
   outline: 0;
   background-color: #eee;
 }
+
+#results img {
+  margin-right: 10px;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+}
