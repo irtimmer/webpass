@@ -21,7 +21,7 @@
 from glob import glob
 import os, sys, struct, json, subprocess
 
-PASS_DIR = os.path.expanduser('~/.password-store')
+PASS_DIR = os.path.expanduser(os.getenv('PASSWORD_STORE_DIR', '~/.password-store'))
 
 # Send message using Native messaging protocol
 def send_message(data):
