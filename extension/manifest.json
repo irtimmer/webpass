@@ -3,8 +3,9 @@
   "manifest_version": 2,
 
   "name": "WebPass",
-  "description": "Web extension for zx2c4's pass",
+  "description": "__MSG_extDescription__",
   "version": "0.1",
+  "default_locale": "en",
   "applications": {
     "gecko": {
       "id": "webpass@itimmer.nl",

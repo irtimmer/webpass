@@ -29,6 +29,7 @@ class PassSearch {
     this.results = results;
     this.selectionIndex = -1;
 
+    this.input.setAttribute("placeholder", browser.i18n.getMessage("searchPlaceholder"));
     this.input.addEventListener("input", this.onInput.bind(this));
     this.input.addEventListener("keydown", this.onKeyDown.bind(this));
     this.input.addEventListener("blur", this.onBlur.bind(this));
