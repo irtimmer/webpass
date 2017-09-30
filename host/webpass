@@ -32,10 +32,13 @@ def send_message(data):
   sys.stdout.buffer.flush()
 
 def search(data):
-  query = '**' + os.sep + data['query'] + '*'
-  files_raw = glob(PASS_DIR + os.sep + query + '.gpg')
-  files = [file[len(PASS_DIR + os.sep):-4] for file in files_raw]
-  send_message({ 'results': files })
+  results = []
+  for root, dirs, files in os.walk(PASS_DIR):
+    dirs[:] = [d for d in dirs if not d[0] == '.']
+    files_raw = [root[len(PASS_DIR + os.sep):] + os.sep + f[:-4] for f in files if not f.startswith('.') and f.endswith('.gpg')]
+    results.extend([f for f in files_raw if data['query'].lower() in f.lower()])
+
+  send_message({ 'results': results })
 
 def show(data):
   result = subprocess.Popen(['gpg', '--quiet', '-d', PASS_DIR + os.sep + data['name'] + '.gpg'], stdout=subprocess.PIPE)
