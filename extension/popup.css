@@ -9,7 +9,7 @@ body {
 
 #search {
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   border: 0;
   box-sizing: border-box;
 }
@@ -34,7 +34,7 @@ body {
   border: 0;
   box-shadow: none;
   text-align: left;
-  padding: 10px 5px;
+  padding: 10px;
 }
 
 #results button:hover, #results button:focus, #results .focus button {
