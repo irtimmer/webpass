@@ -34,6 +34,10 @@ class PassSearch {
     this.input.addEventListener("keydown", this.onKeyDown.bind(this));
     this.input.addEventListener("blur", this.onBlur.bind(this));
     browser.tabs.query({ currentWindow: true, active: true }, this.onTabs.bind(this));
+
+    setTimeout(() => {
+      this.input.focus();
+    }, 100);
   }
 
   search(query) {
