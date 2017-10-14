@@ -28,6 +28,7 @@ class PassSearch {
     this.input = input;
     this.results = results;
     this.selectionIndex = -1;
+    this.background = browser.runtime.connect();
 
     this.input.setAttribute("placeholder", browser.i18n.getMessage("searchPlaceholder"));
     this.input.addEventListener("input", this.onInput.bind(this));
@@ -85,7 +86,7 @@ class PassSearch {
   }
 
   onClick(event) {
-    browser.runtime.sendMessage({ "action": "login", "name": event.target.textContent });
+    this.background.sendMessage({ "action": "login", "name": event.target.textContent });
     window.close();
   }
 
@@ -98,7 +99,7 @@ class PassSearch {
 
   onKeyDown(event) {
     if (event.keyCode == 0x0d && this.results.children[this.selectionIndex]) {
-      browser.runtime.sendMessage({ "action": "login", "name": this.results.children[this.selectionIndex].textContent });
+      this.background.sendMessage({ "action": "login", "name": this.results.children[this.selectionIndex].textContent });
       window.close();
     } else if (event.keyCode == 0x26 && this.selectionIndex > 0)
       this.selectionIndex--;
